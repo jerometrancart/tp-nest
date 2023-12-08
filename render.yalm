@@ -1,0 +1,7 @@
+services:
+  - name: tp-cesi-jerometrancart
+    buildCommand: npm install --production
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
