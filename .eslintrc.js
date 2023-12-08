@@ -21,5 +21,20 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    
+    'quotes': ['error', 'single'],
+    // we want to force semicolons
+    'semi': ['error', 'always'],
+    // we use 2 spaces to indent our code
+    'indent': ['error', 2],
+    // we want to avoid extraneous spaces
+    'no-multi-spaces': ['error'],
+
+    "prettier/prettier": [
+      "error",
+      {
+      "endOfLine": "auto"
+      }
+    ]
   },
 };
