@@ -1,39 +1,56 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import prisma from '../utils/database';
+import { Prisma, Product } from '../../prisma/src/prisma/client';
 
 @Injectable()
 export class ProductService {
-  private products = [];
-
-  getAllProducts() {
-    return this.products;
+  async getAllProducts(): Promise<Product[]> {
+    return prisma.product.findMany();
   }
 
-  getProductById(id: number) {
-    return this.products.find((product) => product.id === id);
-  }
-
-  createProduct(productData: any) {
-    const newProduct = { id: this.products.length + 1, ...productData };
-    this.products.push(newProduct);
-    return newProduct;
-  }
-
-  updateProduct(id: number, productData: any) {
-    const index = this.products.findIndex((product) => product.id === id);
-    if (index !== -1) {
-      this.products[index] = { ...this.products[index], ...productData };
-      return this.products[index];
+  async getProductById(id: number): Promise<Product> {
+    const product = await prisma.product.findUnique({
+      where: { id },
+    });
+    if (!product) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
     }
-    return null;
+    return product;
   }
 
-  deleteProduct(id: number) {
-    const index = this.products.findIndex((product) => product.id === id);
-    if (index !== -1) {
-      const deletedProduct = this.products[index];
-      this.products.splice(index, 1);
-      return deletedProduct;
+  async createProduct(
+    productData: Prisma.ProductCreateInput,
+  ): Promise<Product> {
+    return prisma.product.create({
+      data: productData,
+    });
+  }
+
+  async updateProduct(
+    id: number,
+    productData: Prisma.ProductUpdateInput,
+  ): Promise<Product> {
+    const product = await prisma.product.findUnique({
+      where: { id },
+    });
+    if (!product) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
     }
-    return null;
+    return prisma.product.update({
+      where: { id },
+      data: productData,
+    });
+  }
+
+  async deleteProduct(id: number): Promise<Product> {
+    const product = await prisma.product.findUnique({
+      where: { id },
+    });
+    if (!product) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
+    }
+    return prisma.product.delete({
+      where: { id },
+    });
   }
 }

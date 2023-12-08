@@ -1045,6 +1045,7 @@ export namespace Prisma {
   export type ProductMinAggregateOutputType = {
     id: number | null
     name: string | null
+    image: string | null
     price: number | null
     details: string | null
   }
@@ -1052,6 +1053,7 @@ export namespace Prisma {
   export type ProductMaxAggregateOutputType = {
     id: number | null
     name: string | null
+    image: string | null
     price: number | null
     details: string | null
   }
@@ -1059,6 +1061,7 @@ export namespace Prisma {
   export type ProductCountAggregateOutputType = {
     id: number
     name: number
+    image: number
     price: number
     details: number
     _all: number
@@ -1078,6 +1081,7 @@ export namespace Prisma {
   export type ProductMinAggregateInputType = {
     id?: true
     name?: true
+    image?: true
     price?: true
     details?: true
   }
@@ -1085,6 +1089,7 @@ export namespace Prisma {
   export type ProductMaxAggregateInputType = {
     id?: true
     name?: true
+    image?: true
     price?: true
     details?: true
   }
@@ -1092,6 +1097,7 @@ export namespace Prisma {
   export type ProductCountAggregateInputType = {
     id?: true
     name?: true
+    image?: true
     price?: true
     details?: true
     _all?: true
@@ -1186,6 +1192,7 @@ export namespace Prisma {
   export type ProductGroupByOutputType = {
     id: number
     name: string
+    image: string
     price: number
     details: string
     _count: ProductCountAggregateOutputType | null
@@ -1212,6 +1219,7 @@ export namespace Prisma {
   export type ProductSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    image?: boolean
     price?: boolean
     details?: boolean
   }, ExtArgs["result"]["product"]>
@@ -1219,6 +1227,7 @@ export namespace Prisma {
   export type ProductSelectScalar = {
     id?: boolean
     name?: boolean
+    image?: boolean
     price?: boolean
     details?: boolean
   }
@@ -1230,6 +1239,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
+      image: string
       price: number
       details: string
     }, ExtArgs["result"]["product"]>
@@ -1628,6 +1638,7 @@ export namespace Prisma {
   interface ProductFieldRefs {
     readonly id: FieldRef<"Product", 'Int'>
     readonly name: FieldRef<"Product", 'String'>
+    readonly image: FieldRef<"Product", 'String'>
     readonly price: FieldRef<"Product", 'Float'>
     readonly details: FieldRef<"Product", 'String'>
   }
@@ -3743,6 +3754,7 @@ export namespace Prisma {
   export const ProductScalarFieldEnum: {
     id: 'id',
     name: 'name',
+    image: 'image',
     price: 'price',
     details: 'details'
   };
@@ -3843,6 +3855,7 @@ export namespace Prisma {
     NOT?: ProductWhereInput | ProductWhereInput[]
     id?: IntFilter<"Product"> | number
     name?: StringFilter<"Product"> | string
+    image?: StringFilter<"Product"> | string
     price?: FloatFilter<"Product"> | number
     details?: StringFilter<"Product"> | string
   }
@@ -3850,6 +3863,7 @@ export namespace Prisma {
   export type ProductOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    image?: SortOrder
     price?: SortOrder
     details?: SortOrder
   }
@@ -3860,6 +3874,7 @@ export namespace Prisma {
     OR?: ProductWhereInput[]
     NOT?: ProductWhereInput | ProductWhereInput[]
     name?: StringFilter<"Product"> | string
+    image?: StringFilter<"Product"> | string
     price?: FloatFilter<"Product"> | number
     details?: StringFilter<"Product"> | string
   }, "id">
@@ -3867,6 +3882,7 @@ export namespace Prisma {
   export type ProductOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    image?: SortOrder
     price?: SortOrder
     details?: SortOrder
     _count?: ProductCountOrderByAggregateInput
@@ -3882,6 +3898,7 @@ export namespace Prisma {
     NOT?: ProductScalarWhereWithAggregatesInput | ProductScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Product"> | number
     name?: StringWithAggregatesFilter<"Product"> | string
+    image?: StringWithAggregatesFilter<"Product"> | string
     price?: FloatWithAggregatesFilter<"Product"> | number
     details?: StringWithAggregatesFilter<"Product"> | string
   }
@@ -3991,6 +4008,7 @@ export namespace Prisma {
 
   export type ProductCreateInput = {
     name: string
+    image: string
     price: number
     details: string
   }
@@ -3998,12 +4016,14 @@ export namespace Prisma {
   export type ProductUncheckedCreateInput = {
     id?: number
     name: string
+    image: string
     price: number
     details: string
   }
 
   export type ProductUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     details?: StringFieldUpdateOperationsInput | string
   }
@@ -4011,6 +4031,7 @@ export namespace Prisma {
   export type ProductUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     details?: StringFieldUpdateOperationsInput | string
   }
@@ -4018,12 +4039,14 @@ export namespace Prisma {
   export type ProductCreateManyInput = {
     id?: number
     name: string
+    image: string
     price: number
     details: string
   }
 
   export type ProductUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     details?: StringFieldUpdateOperationsInput | string
   }
@@ -4031,6 +4054,7 @@ export namespace Prisma {
   export type ProductUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    image?: StringFieldUpdateOperationsInput | string
     price?: FloatFieldUpdateOperationsInput | number
     details?: StringFieldUpdateOperationsInput | string
   }
@@ -4174,6 +4198,7 @@ export namespace Prisma {
   export type ProductCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    image?: SortOrder
     price?: SortOrder
     details?: SortOrder
   }
@@ -4186,6 +4211,7 @@ export namespace Prisma {
   export type ProductMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    image?: SortOrder
     price?: SortOrder
     details?: SortOrder
   }
@@ -4193,6 +4219,7 @@ export namespace Prisma {
   export type ProductMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    image?: SortOrder
     price?: SortOrder
     details?: SortOrder
   }
