@@ -1,16 +1,17 @@
 import {
   Controller,
   Get,
-  Param,
   Post,
-  Body,
   Put,
   Delete,
+  Param,
+  Body,
+  HttpException,
+  HttpStatus,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { OrderService } from './order.service';
-import { Order } from '../../prisma/src/prisma/client';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('orders')
 @UseGuards(AuthGuard('jwt'))
@@ -18,27 +19,43 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Get()
-  getAllOrders(): Promise<Order[]> {
+  async getAllOrders() {
     return this.orderService.getAllOrders();
   }
 
   @Get(':id')
-  getOrderById(@Param('id') id: string): Promise<Order> {
-    return this.orderService.getOrderById(+id);
+  async getOrderById(@Param('id') id: string) {
+    return this.orderService.getOrderById(parseInt(id, 10));
   }
 
   @Post()
-  createOrder(@Body() orderData: any): Promise<Order> {
+  async createOrder(@Body() orderData: any) {
+    if (
+      !orderData.userId ||
+      !orderData.orderLines ||
+      orderData.orderLines.length === 0
+    ) {
+      throw new HttpException(
+        'UserId and at least one OrderLine are required',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     return this.orderService.createOrder(orderData);
   }
 
   @Put(':id')
-  updateOrder(@Param('id') id: string, @Body() orderData: any): Promise<Order> {
-    return this.orderService.updateOrder(+id, orderData);
+  async updateOrder(@Param('id') id: string, @Body() orderData: any) {
+    if (!orderData.userId && !orderData.orderLines) {
+      throw new HttpException(
+        'UserId or OrderLines are required',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return this.orderService.updateOrder(parseInt(id, 10), orderData);
   }
 
   @Delete(':id')
-  deleteOrder(@Param('id') id: string): Promise<Order> {
-    return this.orderService.deleteOrder(+id);
+  async deleteOrder(@Param('id') id: string) {
+    return this.orderService.deleteOrder(parseInt(id, 10));
   }
 }

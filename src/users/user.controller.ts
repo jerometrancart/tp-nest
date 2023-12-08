@@ -1,16 +1,18 @@
 import {
   Controller,
   Get,
-  Param,
   Post,
-  Body,
   Put,
   Delete,
+  Param,
+  Body,
+  HttpException,
+  HttpStatus,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
 import { User } from '../../prisma/src/prisma/client';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 @UseGuards(AuthGuard('jwt'))
@@ -29,6 +31,14 @@ export class UserController {
 
   @Post()
   createUser(@Body() userData: any): Promise<User> {
+    // Validation des données requises
+    if (!userData.username || !userData.password) {
+      throw new HttpException(
+        'Username and password are required',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     return this.userService.createUser(userData);
   }
 
