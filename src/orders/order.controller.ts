@@ -6,11 +6,14 @@ import {
   Body,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { OrderService } from './order.service';
 import { Order } from '../../prisma/src/prisma/client';
 
 @Controller('orders')
+@UseGuards(AuthGuard('jwt'))
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
