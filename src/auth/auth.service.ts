@@ -1,5 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Prisma } from '../../prisma/src/prisma/client';
+import prisma from '../utils/database';
 
 @Injectable()
 export class AuthService {
@@ -26,10 +28,23 @@ export class AuthService {
       throw new UnauthorizedException('Invalid password format');
     }
 
-    if (username === 'john.doe' && password === 'Password1$') {
-      return { userId: 1, username: 'john.doe' };
+    const user = await prisma.user.findFirst({
+      where: { username: username },
+    });
+
+    if (user && user.password === password) {
+      return { userId: user.id, username: user.username };
     }
 
     throw new UnauthorizedException('Invalid credentials');
+  }
+
+  async register(userInput: Prisma.UserCreateInput): Promise<any> {
+    // Logique d'inscription de l'utilisateur dans la base de données (exemple avec Prisma)
+    const createdUser = await prisma.user.create({
+      data: userInput,
+    });
+
+    return { userId: createdUser.id, username: createdUser.username };
   }
 }
