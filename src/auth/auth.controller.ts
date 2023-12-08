@@ -8,6 +8,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
+import prisma from '../utils/database';
 
 @Controller('auth')
 export class AuthController {
